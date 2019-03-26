@@ -34,11 +34,7 @@ public class Robot extends TimedRobot {
   private final JoystickButton cargoIn = new JoystickButton(chainStick, 11);
   private final JoystickButton cargoOut = new JoystickButton(chainStick, 12);
 
-  private final Servo cargoServo = new Servo(0);
-
-
-  private final JoystickButton polarityButton = new JoystickButton(driveStick, 2);
-  boolean isPolaritySet = false;
+  //private final Servo cargoServo = new Servo(0);
 
 
 
@@ -113,7 +109,7 @@ public class Robot extends TimedRobot {
       
     stickSense = driveStick.getRawAxis(3) + 2;
 
-    if (!isPolaritySet) {
+    //if (!isPolaritySet) {
         
       //right side
       robo.getController(1).set((stickY+stickX) / stickSense);
@@ -122,9 +118,6 @@ public class Robot extends TimedRobot {
       robo.getController(3).set((-stickY+stickX) / stickSense);
       robo.getController(4).set((-stickY+stickX) / stickSense);
 
-
-      if (polarityButton.get()) { isPolaritySet = true; }
-
       //Move chain mechanism with stick
       //robo.getController(9).set(chainStick.getY());
       if (liftUpButton.get()) {
@@ -139,7 +132,7 @@ public class Robot extends TimedRobot {
 
       //Move ramp in and out with buttons if the limit switch is not being pressed
       
-      if (pulleyDownButton.get()) {
+      if (pulleyUpButton.get()) {
         robo.getController(7).set(-1.0);
       }
       else if (pulleyDownButton.get()) {
@@ -149,56 +142,6 @@ public class Robot extends TimedRobot {
         robo.getController(7).set(0.0);
       }
 
-    }
-
-    else if (isPolaritySet) {
-
-      //right side
-      robo.getController(1).set((-stickY+stickX) / stickSense);
-      robo.getController(2).set((-stickY+stickX) / stickSense);
-      //left side
-      robo.getController(3).set((stickY+stickX) / stickSense);
-      robo.getController(4).set((stickY+stickX) / stickSense);
-
-
-      if (polarityButton.get()) { isPolaritySet = false; }
-
-      //Move chain mechanism with stick
-      //robo.getController(9).set(chainStick.getY());
-      if (liftUpButton.get()) {
-        robo.getController(9).set(-0.4);
-      }
-      else if (liftDownButton.get()) {
-        robo.getController(9).set(0.4);
-      }
-      else {
-        robo.getController(9).set(0.0);
-      }
-
-      //Move ramp in and out with buttons if the limit switch is not being pressed
-      
-      if (pulleyDownButton.get()) {
-        robo.getController(7).set(1.0);
-      }
-      else if (pulleyDownButton.get()) {
-        robo.getController(7).set(-1.0);
-      }
-      else {
-        robo.getController(7).set(0.0);
-      }
-    }
-
-    
-
-    if (cargoIn.get()) {
-      cargoServo.set(1.0);
-    }
-    else if (cargoOut.get()) {
-      cargoServo.set(-1.0);
-    }
-    else {
-      cargoServo.set(0.0);
-    }
   }
 
   /**
